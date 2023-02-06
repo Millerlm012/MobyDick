@@ -18,7 +18,17 @@ services:
     networks:
       - localnet
 
-  # app:
+  app:
+    build: ./app
+    ports:
+      - "5173:5173"
+      - "24678:24678"
+    depends_on:
+      - api
+    volumes:
+      - ./app/srv/mobydick/src:/srv/src
+    networks:
+      - localnet
 
   web:
     image: nginx:1.23-alpine
@@ -29,6 +39,7 @@ services:
       - "443:443"
     depends_on:
       - api
+      - app
     volumes:
       - ./nginx:/etc/nginx/conf.d:ro
     networks:
