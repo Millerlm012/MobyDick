@@ -1,0 +1,19 @@
+version: "3"
+services:
+
+  analysis:
+    build: ./python/image
+    volumes:
+      - ./python/srv:/srv
+    networks:
+      - localnet
+
+  # api:
+
+  # app:
+
+  # web:
+
+networks:
+  localnet:
+    driver: bridge
