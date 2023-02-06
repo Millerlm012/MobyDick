@@ -5,14 +5,34 @@ services:
     build: ./analysis/image
     volumes:
       - ./analysis/srv:/srv
+
+  api:
+    build: ./api/image
+    hostname: api
+    command: python3 api.py
+    volumes:
+      - ./api/srv/:/srv
+      - ./analysis/srv/files/:/files:ro
+    expose:
+      - 8001
     networks:
       - localnet
 
-  # api:
-
   # app:
 
-  # web:
+  web:
+    image: nginx:1.23-alpine
+    hostname: web
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+    networks:
+      - localnet
 
 networks:
   localnet:

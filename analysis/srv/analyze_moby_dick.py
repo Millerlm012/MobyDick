@@ -2,7 +2,7 @@
 To performance analysis on Moby Dick by Herman Melville.
 """
 
-import os
+import json
 
 def load_file(filename):
     """
@@ -43,7 +43,7 @@ def count_top_100_frequent_words():
     occurrences_sorted.sort(reverse=True)
 
     with open('./files/top_100.txt', 'w') as f:
-        f.write(str(occurrences_sorted[:100]))
+        f.write(json.dumps(occurrences_sorted[:100]))
 
 
 if __name__ == '__main__':
