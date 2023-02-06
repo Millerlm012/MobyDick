@@ -2,9 +2,9 @@ version: "3"
 services:
 
   analysis:
-    build: ./python/image
+    build: ./analysis/image
     volumes:
-      - ./python/srv:/srv
+      - ./analysis/srv:/srv
     networks:
       - localnet
 
