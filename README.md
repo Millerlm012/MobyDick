@@ -5,7 +5,7 @@ Moby Dick Project for Source Allies.
 
 - [Stack Overview](#1-stack-overview)
 - [First Time Setup](#2-first-time-setup)
-- [Additional Information / Project Run Down](#3-additional-information-project-run-down)
+- [Additional Information and Project Run Down](#3-additional-information-and-project-run-down)
 
 ## 1. Stack Overview
 
@@ -56,7 +56,7 @@ NOTE: if you're running Windows or MacOS please ensure you have the Docker Engin
 
 4. Finally, navigate to http://localhost in your web browser to view the final result :)
 
-## 3. Additional Information / Project Run Down
+## 3. Additional Information and Project Run Down
 
 ### Project Run Down:
 
