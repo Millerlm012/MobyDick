@@ -1,5 +1,5 @@
 """
-To performance analysis on Moby Dick by Herman Melville.
+To perform analysis on Moby Dick by Herman Melville.
 """
 
 import json
