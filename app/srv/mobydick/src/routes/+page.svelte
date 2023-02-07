@@ -4,6 +4,9 @@
     let load = fetchTop100();
     let top100 = [];
 
+    // fetching top100 results from the API
+    // please note: we have to utilize browser because we're utilizing XMLHttpRequest() which is not available in Node
+    // by default this function will try to run both server side and client side, the if (browser) ensures this only runs client side
     function fetchTop100() {
         if (browser) {
             let request = new XMLHttpRequest();
