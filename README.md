@@ -70,7 +70,7 @@ Finally, once the API and NGINX was in place, I went ahead and intilized the Sve
 
 ### Additional Information:
 
-If you have questions more directly about the code, there is comments. Please see those first and if you have further questions, please ask!
+If you have questions more directly about the code, there is thourough comments throughout. Please see those first and if you have further questions, please ask!
 
 ### Why did I choose the stack that I did?
 
