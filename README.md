@@ -62,7 +62,7 @@ NOTE: if you're running Windows or MacOS please ensure you have the Docker Engin
 
 My process for this project was first come up with a solution to the problem, "Create a list of the 100 most frequently occurring words with the count of occurrences for each word found in the attached text for Herman Melville's novel, Moby Dick. Ensure this top-100 list does not include any words in the provided stop words list." So the first thing I built was the `analysis/srv/analyze_moby_dick.py`.
 
-After coming up with the solution, I definitely could've just displayed the finalized list via printing to the terminal or something simple like that, but I'm a Full Stack Developer, thus I wanted to show my skills and abilities as best as I can. With this in mind, I decided to build a full stack and utilize Docker just as I would do for anything else I've worked on. Please see furhter below to see why I chose the tech that I did.
+After coming up with the solution, I definitely could've just displayed the finalized list via printing to the terminal or something simple like that, but I'm a Full Stack Developer, thus I wanted to show my skills and abilities as best as I can. With this in mind, I decided to build a full stack and utilize Docker just as I would do for anything else I've worked on. Please see further below to see why I chose the tech that I did.
 
 After deciding what I was building (a full stack web app), I went ahead and built the API. After that was built, I needed to test it so, I fleshed out the reverse proxy and made sure I was able to make successful web requests to that.
 
