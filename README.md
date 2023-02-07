@@ -54,6 +54,8 @@ This will start our stack inside docker containers.
 
 NOTE: if you're running Windows or MacOS please ensure you have the Docker Engine running by starting Docker Desktop on your computer.
 
+4. Finally, navigate to http://localhost in your web browser to view the final result :)
+
 ## 3. Additional Information / Project Run Down
 
 ### Project Run Down:
