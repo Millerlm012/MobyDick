@@ -5,7 +5,7 @@ Moby Dick Project for Source Allies.
 
 - [Stack Overview](#1-stack-overview)
 - [First Time Setup](#2-first-time-setup)
-- [Additional Information / Project Run Down](#3-additional-information-/-project-run-down)
+- [Additional Information / Project Run Down](#3-additional-information-project-run-down)
 
 ## 1. Stack Overview
 
