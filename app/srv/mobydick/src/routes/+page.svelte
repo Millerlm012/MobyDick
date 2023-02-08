@@ -75,7 +75,7 @@
             <p>Loading...</p>
         {:then}
             <div class="data">
-                {#each top100 as {count, word}, i}
+                {#each top100 as {word, count}, i}
                     <div>#{i+1} --- {word} --- {count}</div>
                 {/each}
             </div>
