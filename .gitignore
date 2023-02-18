@@ -3,6 +3,9 @@ venv
 env
 __pycache__
 
+# go
+build
+
 # NOTE:
 # I'm ignoring the answer as it'll re-generate as soon as the next person spins up the docker environment.
 # Why am I ignoring it? Because I'm wanting to simulate what it'd be like in a production environment, and

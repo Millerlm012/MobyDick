@@ -1,10 +1,10 @@
 version: "3"
 services:
 
-  analysis:
-    build: ./analysis/image
+  analysis-go:
+    build: ./analysis-go
     volumes:
-      - ./analysis/srv:/srv
+      - ./analysis-go/srv:/srv
 
   api:
     build: ./api/image
@@ -12,7 +12,7 @@ services:
     command: python3 api.py
     volumes:
       - ./api/srv/:/srv
-      - ./analysis/srv/files/:/files:ro
+      - ./analysis-go/srv/analyze/files/:/files:ro
     expose:
       - 8001
     networks:

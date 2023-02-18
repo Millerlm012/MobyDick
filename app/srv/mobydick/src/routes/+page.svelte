@@ -14,13 +14,7 @@
             request.send();
             request.onload = () => {
                 let data = JSON.parse(request.response);
-                for (let i=0; i<data.length; i++) {
-                    let obj = {};
-                    obj.count = data[i][0];
-                    obj.word = data[i][1];
-                    top100.push(obj);
-                }
-                top100 = top100;
+                top100 = data;
             }
         }
     }
@@ -75,8 +69,8 @@
             <p>Loading...</p>
         {:then}
             <div class="data">
-                {#each top100 as {word, count}, i}
-                    <div>#{i+1} --- {word} --- {count}</div>
+                {#each top100 as word, i}
+                    <div>#{i+1} --- {word.Word} --- {word.Count}</div>
                 {/each}
             </div>
         {/await}
