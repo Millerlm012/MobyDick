@@ -11,43 +11,28 @@ do
     esac
 done
 
-result=false
+echo "Verifying tests image..."
+echo "----------------------------------------------------------------------"
+docker build ./tests/image/ -t mobydick-tests
+echo "----------------------------------------------------------------------"
+
 if [ "$target" = "" ]; then
-    DOCKER_BUILDKIT=0 docker build -f Dockerfile.test . --rm -t mobydick_tests && result=true
+    docker run --rm \
+        --name mobydick-tests \
+        --volume=${PWD}/tests/srv:/srv/tests \
+        --volume=${PWD}/analysis:/srv/analysis \
+        -it mobydick-tests \
+        python -m unittest discover -s /srv/tests
 else
-    if [ $target = "unit_tests" ] || [ $target = "api_tests" ]; then
-        DOCKER_BUILDKIT=0 docker build --target $target -f Dockerfile.test . --rm -t mobydick_tests && result=true
+    if [ $target = "test_analysis" ] || [ $target = "test_api" ] || [ $target = "test_client" ]; then
+        docker run --rm \
+            --name mobydick-tests \
+            --volume=${PWD}/tests/srv:/srv/tests \
+            --volume=${PWD}/analysis:/srv/analysis \
+            -it mobydick-tests \
+            python -m unittest /srv/tests/$target.py
     else
-        echo "ERROR: $target is not an available build stage. Please choose 'unit_tests' or 'api_tests'."
+        echo "ERROR: $target is not an available build stage. Please choose 'test_analysis', 'test_api', or 'test_client."
         exit 1
     fi
-fi
-
-if [ $result = false ]; then
-    echo "----------------------------------------------------------------------"
-    echo "Tests failed! :("
-    echo "Cleaning up..."
-    echo "----------------------------------------------------------------------"
-
-    # fetching the last docker image (it is assumed that's our broken image)
-    hanging_image_id=$(docker images | awk '{print $3}' | awk 'NR==2')
-    # removing container that was running the broken image
-    docker rm $(docker ps -a -q --filter "ancestor=$hanging_image_id")
-    # removing broken image
-    docker rmi $hanging_image_id
-
-    echo "----------------------------------------------------------------------"
-    echo "Completed clean up."
-    echo "----------------------------------------------------------------------"
-else
-    echo "----------------------------------------------------------------------"
-    echo "Completed tests successfully!"
-    echo "Cleaning up..."
-    echo "----------------------------------------------------------------------"
-
-    docker rmi mobydick_tests
-
-    echo "----------------------------------------------------------------------"
-    echo "Completed tests and cleaned up successfully! Have a lovely day! :)"
-    echo "----------------------------------------------------------------------"
 fi

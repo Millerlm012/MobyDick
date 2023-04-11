@@ -70,7 +70,7 @@
         {:then}
             <div class="data">
                 {#each top100 as word, i}
-                    <div>#{i+1} --- {word.Word} --- {word.Count}</div>
+                    <div id="data-{i}">#{i+1} --- {word.Word} --- {word.Count}</div>
                 {/each}
             </div>
         {/await}
