@@ -56,7 +56,32 @@ NOTE: if you're running Windows or MacOS please ensure you have the Docker Engin
 
 4. Finally, navigate to http://localhost in your web browser to view the final result :)
 
-## 3. Additional Information and Project Run Down
+## 5. Running Tests
+
+To run tests, please follow these simple steps:
+
+1. Start the environment if it's not already running. To verify the stack is running, execute `docker-compose ps`. You should receive the below output from `docker-compose ps` if everything is working.
+
+```
+NAME                IMAGE               COMMAND                  SERVICE             CREATED             STATUS              PORTS
+mobydick-api-1      mobydick-api        "python3 api.py"         api                 2 minutes ago       Up 2 minutes        8001/tcp
+mobydick-app-1      mobydick-app        "docker-entrypoint.s…"   app                 2 minutes ago       Up 2 minutes        0.0.0.0:5173->5173/tcp, 0.0.0.0:24678->24678/tcp
+mobydick-web-1      nginx:1.23-alpine   "/docker-entrypoint.…"   web                 2 minutes ago       Up 2 minutes        0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp
+```
+
+2. After verifying that the stack is online, simply run `./run_tests` to run all available tests. If you're wanting to execute a specific test, pass `-t test_name`. An example of passing the `-t` flag is shown below.
+
+```
+# this will run the analysis test
+./run_tests -t analysis
+```
+
+`-t` OPTIONS:
+- analysis
+- api
+- client
+
+## 4. Additional Information and Project Run Down
 
 ### Project Run Down:
 
