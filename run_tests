@@ -1,0 +1,38 @@
+#!/bin/bash
+
+echo "-----------------------"
+echo "Starting tests..."
+echo "-----------------------"
+
+result=false
+DOCKER_BUILDKIT=0 docker build -f Dockerfile.test . --rm -t minced_tests && result=true
+
+if [ $result = false ]
+then
+    echo "-----------------------"
+    echo "Tests failed! :("
+    echo "Cleaning up..."
+    echo "-----------------------"
+
+    # fetching the last docker image (it is assumed that's our broken image)
+    hanging_image_id=$(docker images | awk '{print $3}' | awk 'NR==2')
+    # removing container that was running the broken image
+    docker rm $(docker ps -a -q --filter "ancestor=$hanging_image_id")
+    # removing broken image
+    docker rmi $hanging_image_id
+
+    echo "-----------------------"
+    echo "Cleaned up successfully!"
+    echo "-----------------------"
+else
+    echo "-----------------------"
+    echo "Completed tests!"
+    echo "Cleaning up..."
+    echo "-----------------------"
+
+    docker rmi minced_tests
+
+    echo "-----------------------"
+    echo "Completed tests and cleaned up successfully! Have a lovely day! :)"
+    echo "-----------------------"
+fi
