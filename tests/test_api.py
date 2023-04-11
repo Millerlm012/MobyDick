@@ -1,15 +1,13 @@
 import unittest
-import shutil
+import requests
 
 class TestAPIMethods(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(self):
-        shutil.copytree('./analysis/srv/files', './files')
+    def test_get_top_100(self):
+        req = requests.get('http://host.docker.internal/api/top_100')
 
-    @classmethod
-    def tearDownClass(self):
-        shutil.rmtree('./files')
+        self.assertEqual(200, req.status_code)
+        self.assertEqual(100, len(req.json()))
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,18 +1,33 @@
 #!/bin/bash
 
-echo "-----------------------"
+echo "----------------------------------------------------------------------"
 echo "Starting tests..."
-echo "-----------------------"
+echo "----------------------------------------------------------------------"
+
+while getopts t: flag
+do
+    case "${flag}" in
+        t) target=${OPTARG};;
+    esac
+done
 
 result=false
-DOCKER_BUILDKIT=0 docker build -f Dockerfile.test . --rm -t minced_tests && result=true
+if [ "$target" = "" ]; then
+    DOCKER_BUILDKIT=0 docker build -f Dockerfile.test . --rm -t mobydick_tests && result=true
+else
+    if [ $target = "unit_tests" ] || [ $target = "api_tests" ]; then
+        DOCKER_BUILDKIT=0 docker build --target $target -f Dockerfile.test . --rm -t mobydick_tests && result=true
+    else
+        echo "ERROR: $target is not an available build stage. Please choose 'unit_tests' or 'api_tests'."
+        exit 1
+    fi
+fi
 
-if [ $result = false ]
-then
-    echo "-----------------------"
+if [ $result = false ]; then
+    echo "----------------------------------------------------------------------"
     echo "Tests failed! :("
     echo "Cleaning up..."
-    echo "-----------------------"
+    echo "----------------------------------------------------------------------"
 
     # fetching the last docker image (it is assumed that's our broken image)
     hanging_image_id=$(docker images | awk '{print $3}' | awk 'NR==2')
@@ -21,18 +36,18 @@ then
     # removing broken image
     docker rmi $hanging_image_id
 
-    echo "-----------------------"
-    echo "Cleaned up successfully!"
-    echo "-----------------------"
+    echo "----------------------------------------------------------------------"
+    echo "Completed clean up."
+    echo "----------------------------------------------------------------------"
 else
-    echo "-----------------------"
-    echo "Completed tests!"
+    echo "----------------------------------------------------------------------"
+    echo "Completed tests successfully!"
     echo "Cleaning up..."
-    echo "-----------------------"
+    echo "----------------------------------------------------------------------"
 
-    docker rmi minced_tests
+    docker rmi mobydick_tests
 
-    echo "-----------------------"
+    echo "----------------------------------------------------------------------"
     echo "Completed tests and cleaned up successfully! Have a lovely day! :)"
-    echo "-----------------------"
+    echo "----------------------------------------------------------------------"
 fi

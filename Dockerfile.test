@@ -2,8 +2,7 @@ FROM python:3.10-alpine AS unit_tests
 WORKDIR /srv
 COPY ./analysis /srv/analysis
 COPY ./tests /srv/tests
+RUN python3 -m pip install --upgrade pip setuptools wheel && \
+   python3 -m pip install -r /srv/tests/requirements.txt
 RUN python -m unittest tests/test_analysis.py
-
-FROM python:3.10-alpine
-WORKDIR /srv
-COPY --from=unit_tests /srv/tests /srv
+RUN python -m unittest tests/test_api.py
