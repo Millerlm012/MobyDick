@@ -1,0 +1,43 @@
+#!/bin/bash
+
+echo "----------------------------------------------------------------------"
+echo "Starting tests..."
+echo "----------------------------------------------------------------------"
+
+while getopts t: flag
+do
+    case "${flag}" in
+        t) target=${OPTARG};;
+    esac
+done
+
+echo "Verifying tests image..."
+echo "----------------------------------------------------------------------"
+docker build ./tests/image/ -t mobydick-tests
+echo "----------------------------------------------------------------------"
+
+if [ "$target" = "" ]; then
+    docker run --rm \
+        --name mobydick-tests \
+        --volume=${PWD}/tests/srv:/srv/tests \
+        --volume=${PWD}/analysis:/srv/analysis \
+        -it mobydick-tests \
+        python -m unittest discover -s /srv/tests
+else
+    if [ $target = "analysis" ] || [ $target = "api" ] || [ $target = "client" ]; then
+    echo "Executing '$target' tests..."
+        docker run --rm \
+            --name mobydick-tests \
+            --volume=${PWD}/tests/srv:/srv/tests \
+            --volume=${PWD}/analysis:/srv/analysis \
+            -it mobydick-tests \
+            python -m unittest /srv/tests/test_$target.py
+    else
+        echo "ERROR: $target is not an available build stage. Please choose 'analysis', 'api', or 'client."
+        exit 1
+    fi
+fi
+
+echo "----------------------------------------------------------------------"
+echo "Completed tests!"
+echo "----------------------------------------------------------------------"
